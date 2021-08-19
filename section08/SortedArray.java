@@ -67,36 +67,21 @@ public class SortedArray {
 
     // Sort list in descending order using Selection Sort
     public static int[] sortIntegers(int[] numberList) {
-        boolean isSorted = false;
-        int i = 0;
-        int biggestNumber = 0;
-        int biggestNumberIndex = 0;
-        int temp = 0;
+        int biggestNumber, biggestNumberIndex, temp;
 
-        // Repeat until no unsorted elements remain
-        while (!isSorted) {
+        for (int i = 0; i < numberList.length - 1; i++) {
             biggestNumber = numberList[i];
             biggestNumberIndex = i;
-
-            // Find the biggest number in the unsorted part of the array
             for (int j = i + 1; j < numberList.length; j++) {
-                if (biggestNumber < numberList[j]) {
+                if (numberList[j] > biggestNumber) {
                     biggestNumber = numberList[j];
                     biggestNumberIndex = j;
                 }
             }
 
-            // Swap the biggest number found with the first element of the unsorted array
             temp = numberList[i];
             numberList[i] = biggestNumber;
             numberList[biggestNumberIndex] = temp;
-
-            i++;
-
-            // If element is the last on the list then everything is sorted
-            if (i == numberList.length - 1) {
-                isSorted = true;
-            }
         }
 
         return numberList;
