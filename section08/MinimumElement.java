@@ -7,8 +7,15 @@ public class MinimumElement {
     public static final String TEXT_PURPLE = "\u001B[35m";
 
     public static void main(String[] args) {
+
+		/* Create an array. Prompt user for array size
+		and elements that are going to be stored in the array */
         int[] numberList = readElements(readInteger());
 
+		// CLose the scanner
+		scanner.close();
+
+		// Find and print the smallest element in the array
         System.out.println("");
         System.out.println("The smallest number is: " + TEXT_PURPLE + findMin(numberList) + TEXT_RESET);
     }
