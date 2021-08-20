@@ -55,6 +55,7 @@ public class MinimumElement {
 
         int i = 0;
         while (i < size) {
+			System.out.print("Enter a number: ");
             try {
                 list[i] = Integer.valueOf(scanner.nextLine());
                 i++;
