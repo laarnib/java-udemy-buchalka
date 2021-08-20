@@ -1,14 +1,17 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class SortedArray {
     // write code here
+    private static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         int[] numberList;
         int size = 0;
 
-        // Get size from the user.
-        size = getArraySize(scanner);
+        /* Get size from the user and if size is a -1, print Invalid size
+        to screen and terminate the program. */
+        size = getArraySize();
         if (size == -1) {
             System.out.println("Invalid size.");
             System.out.println("Exiting...");
@@ -16,20 +19,24 @@ public class SortedArray {
         }
 
         numberList = getIntegers(size);
+
+        // Close the scanner
+        scanner.close();
+
+        // Print unsorted array
         System.out.println("Unsorted: ");
         printArray(numberList);
 
-        sortIntegers(numberList);
-
+        /* Make a copy of the array and sort the copy in descending order.
+        Print the sorted array */
         System.out.println("");
         System.out.println("Sorted: ");
-        printArray(numberList);
+        printArray(sortIntegers(numberList));
     }
 
     /* Get array size from the user.
-       If size or user input is a non integer value, return -1.
-     */
-    public static int getArraySize(Scanner scanner) {
+       If size or user input is a non integer value, return -1.*/
+    public static int getArraySize() {
         int size = 0;
 
         System.out.print("How many numbers do you want to enter? ");
@@ -46,10 +53,8 @@ public class SortedArray {
     }
 
     /* Get integers from the user. If user enters a non integer value,
-    don't store the input in the array.
-     */
+    don't store the input in the array.*/
     public static int[] getIntegers(int arraySize) {
-        Scanner scanner = new Scanner(System.in);
         int[] numberList = new int[arraySize];
 
         System.out.println("Enter your numbers below: ");
@@ -65,26 +70,28 @@ public class SortedArray {
         return numberList;
     }
 
-    // Sort list in descending order using Selection Sort
+    // Make a copy of the array and sort list in descending order using Selection Sort
     public static int[] sortIntegers(int[] numberList) {
+        // Make a copy of the array to leave the original array unchanged
+        int[] sortedList = Arrays.copyOf(numberList, numberList.length);
         int biggestNumber, biggestNumberIndex, temp;
 
-        for (int i = 0; i < numberList.length - 1; i++) {
-            biggestNumber = numberList[i];
+        for (int i = 0; i < sortedList.length - 1; i++) {
+            biggestNumber = sortedList[i];
             biggestNumberIndex = i;
-            for (int j = i + 1; j < numberList.length; j++) {
-                if (numberList[j] > biggestNumber) {
-                    biggestNumber = numberList[j];
+            for (int j = i + 1; j < sortedList.length; j++) {
+                if (sortedList[j] > biggestNumber) {
+                    biggestNumber = sortedList[j];
                     biggestNumberIndex = j;
                 }
             }
 
-            temp = numberList[i];
-            numberList[i] = biggestNumber;
-            numberList[biggestNumberIndex] = temp;
+            temp = sortedList[i];
+            sortedList[i] = biggestNumber;
+            sortedList[biggestNumberIndex] = temp;
         }
 
-        return numberList;
+        return sortedList;
     }
 
     // Prints the contents of the array
