@@ -22,7 +22,6 @@ public class MinimumElement {
 
     private static int readInteger() {
         int readInteger = 0;
-        //boolean repeatLoop = true;
 
         // Keep prompting until the user enters a valid integer value
         while(true) {
@@ -35,14 +34,11 @@ public class MinimumElement {
                 /* Check that the integer value entered is greater than zero
                 and if it is, exit the loop and return the readInteger */
                 if (readInteger <= 0) {
-                    //repeatLoop = true;
                     System.out.println(TEXT_RED + "Invalid value. Please enter an integer number greater than zero." + TEXT_RESET);
                 } else {
-                    //repeatLoop = false;
                     break;
                 }
             } catch (NumberFormatException e) {
-                //repeatLoop = true;
                 System.out.println(TEXT_RED + "That is not an integer. Please enter an integer value greater than zero." + TEXT_RESET);
             }
         }
