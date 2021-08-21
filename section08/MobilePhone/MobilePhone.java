@@ -40,10 +40,25 @@ public class MobilePhone {
         return myFirstName + " " + myLastName;
     }
 
+    /* Prints contact list. If contact list is empty,
+    prints "Your contact list is empty." */
+    public void printContactList() {
+        System.out.println("");
+        if (myContacts.size() == 0) {
+            System.out.println("Your contact list is empty.");
+        } else {
+            for (Contact contact : myContacts) {
+                System.out.println((myContacts.indexOf(contact) + 1) + ". " + contact);
+            }
+        }
+    }
+
+    /* Adds new contact if contact doesn't already exists.
+    Returns true if contact is successfully added,
+    false otherwise */
     public boolean addNewContact(Contact newContact) {
         int index = findContactFromList(newContact);
 
-        // Check if new contact to be added already exists
         if (index >= 0) {
             return false;
         }
@@ -52,45 +67,63 @@ public class MobilePhone {
         return true;
     }
 
-    private int findContactFromList(Contact contact) {
-        return findContactFromList(contact.getFullName());
-    }
+    /* Updates existing contact. If contact to be updated does not exist,
+    action is not performed. Otherwise, new information is checked for
+    duplication. If new information is not in the list, contact is updated
+    with the new information. */
+    public void updateContact(Contact currentContact, Contact newContact) {
+        boolean isDuplicateInformation = isDuplicateContactInformation(newContact);
 
-    private int findContactFromList(String name) {
-        for (Contact contact : myContacts) {
-            if (contact.getFullName().equals(name)) {
-                return myContacts.indexOf(contact);
-            }
+        if (isDuplicateInformation) {
+            System.out.println("Similar contact already exists. Update not executed.");
+        } else {
+            int index = myContacts.indexOf(currentContact);
+            myContacts.set(index, newContact);
+            System.out.println("Update successful.");
+            System.out.println("Here is the updated contact information: " + myContacts.get(index));
         }
-        return -1;
     }
 
+    /* Search contact list. If contact is found, return contact.
+    Otherwise, display message that contact was not found in the list. */
     public Contact searchContactFromList(String name) {
         int index = findContactFromList(name);
         if (index >= 0) {
-            System.out.println(name + " found.");
+            System.out.println("\n" + name + " found.");
             return myContacts.get(index);
         }
 
         return null;
     }
 
-    public int updateContact(Contact currentContact, Contact newContact) {
-        int index = findContactFromList(currentContact);
-
-        if (index >= 0) {
-            // Check if the new information already exists
-            if (findContactFromList(newContact) >= 0) {
-                System.out.println("Contact already exists. Update not executed.");
-                return -1;
-            }
-
-            myContacts.set(index, newContact);
-        }
-
-        return index;
+    // Searches for contact in the list
+    private int findContactFromList(Contact contact) {
+        return findContactFromList(contact.getFullName());
     }
 
+    // Searches for contact in the list
+    private int findContactFromList(String name) {
+        for (Contact contact : myContacts) {
+            if (contact.getFullName().toLowerCase().equals(name.toLowerCase())) {
+                return myContacts.indexOf(contact);
+            }
+        }
+        return -1;
+    }
+
+    // Check for duplicate information of contact
+    private boolean isDuplicateContactInformation(Contact contactToBeCompared) {
+        for (Contact contact : myContacts) {
+            if (contact.getFullName().toLowerCase().equals(contactToBeCompared.getFullName().toLowerCase()) &&
+                    contact.getPhoneNumber().equals(contactToBeCompared.getPhoneNumber())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Remove contact from list. Return true if operation is successful, false otherwise.
     public boolean removeContact(String name) {
         Contact searchedContact = searchContactFromList(name);
         if (searchedContact != null) {
@@ -100,22 +133,6 @@ public class MobilePhone {
         }
 
         return false;
-    }
-
-    // Prints contact list
-    public void printContactList() {
-        System.out.println("");
-        if (myContacts.size() == 0) {
-            System.out.println("Your contacts is empty.");
-        } else {
-            for (Contact contact : myContacts) {
-                System.out.println((myContacts.indexOf(contact) + 1) + ". " + contact);
-            }
-        }
-    }
-
-    public void printAContact(int index) {
-        System.out.println(myContacts.get(index));
     }
 
     @Override
